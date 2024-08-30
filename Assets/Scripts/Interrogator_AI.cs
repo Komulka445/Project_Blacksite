@@ -18,9 +18,10 @@ public class Interrogator_AI : MonoBehaviour
     public float rotateTime = 2.0f;
     bool first = true;
     int phase = 0;
-    // Start is called before the first frame update
+
     void Start()
     {
+        //peruspositiot ja kääntökulma
         targetPosition = new Vector3(transform.position.x -6, transform.position.y, transform.position.z);
         returnPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
         currentPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
@@ -28,13 +29,13 @@ public class Interrogator_AI : MonoBehaviour
         targetAngle = new Vector3(transform.rotation.x, transform.rotation.y - 90, transform.rotation.z);
     }
 
-    // Update is called once per frame
     void Update()
     {
+        //Updateta nykynen kulma ja asema
         currentAngle = new Vector3(transform.rotation.x, transform.rotation.y, transform.rotation.z);
         currentPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
         if (phase == 0)
-        {
+        { //eka pätkä alusta oven eteen
             transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
             if (currentPosition == targetPosition)
             {
@@ -42,9 +43,8 @@ public class Interrogator_AI : MonoBehaviour
             }
         }
         else if (phase == 1)
-        {
+        { //käännös
             transform.Rotate(0, Time.deltaTime * -45, 0);
-            Debug.Log("Rotti toimii");
             rotateTime -= Time.deltaTime;
             if (rotateTime <= 0.0f)
             {
@@ -53,13 +53,23 @@ public class Interrogator_AI : MonoBehaviour
             }
         }
         else if (phase == 2)
-        {
+        { // liikke tuolille
             transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
             if (currentPosition == targetPosition)
             {
                 phase = 3;
             }
         }
+    }
+}
+
+
+
+
+
+
+
+//ARCHIVE ALKAA
         /*if (transform.position == targetPosition && first == true)
         {
             Debug.Log("lapi");
@@ -76,7 +86,7 @@ public class Interrogator_AI : MonoBehaviour
                 first = false;
             }*/
         
-    }
+  
     //private void entry()
     //{
     //    transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
@@ -98,4 +108,3 @@ public class Interrogator_AI : MonoBehaviour
     //        }*/
     //    }
     //}
-}

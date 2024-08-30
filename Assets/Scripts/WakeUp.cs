@@ -33,7 +33,6 @@ public class WakeUp : MonoBehaviour
             elapsedTime += Time.deltaTime;
             float t = Mathf.Clamp01(elapsedTime / duration);
             vignette.intensity.value = Mathf.Lerp(startValue, endValue, t);
-
             if (t >= 1.0f)
             {
                 isAnimating = false;
