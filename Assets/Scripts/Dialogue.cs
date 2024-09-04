@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,54 +12,59 @@ public class Dialogue : MonoBehaviour
     public string[] lines;
     public float textSpeed;
     private Vignette vignette;
+    public float waitTime = 5.0f;
+    public float changeRowTime = 2.0f;
     private int index;
-    // Start is called before the first frame update
+    private bool start = true;
+    private int maxIndex = 1;
+    //textfeidaus
+    public float fadeTime;
+    public float alphaValue;
+    public float fadeAwayPerSecond;
     void Start()
     {
-        gameObject.SetActive(false);
+        index = 0;
         textComp.text = string.Empty;
-        Debug.Log("inactive");
-        //StartDialogue();
-    }
 
-    // Update is called once per frame
+        textComp = GetComponent<TextMeshProUGUI>();
+        fadeAwayPerSecond = 1 / fadeTime;
+        alphaValue = textComp.color.a;
+    }
     void Update()
     {
-        Debug.Log(vignette.intensity.value);
-        if (vignette.intensity.value <= 0.26f)
+        waitTime -= Time.deltaTime;
+        if (waitTime <= 0.0f && start == true) //alkulinet
         {
             Debug.Log("active");
             gameObject.SetActive(true);
-            StartDialogue();
+            PrintLine();
+            start = false;
         }
-
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && start == false) //skippaa lukeminen /nextline
         {
-            gameObject.SetActive(true);
-            if(textComp.text == lines[index])
+            if (textComp.text == lines[index] && index <= maxIndex)
             {
                 NextLine();
             }
             else
             {
+                Debug.Log("else lpi");
                 StopAllCoroutines();
                 textComp.text = lines[index];
+                if (fadeTime > 0)
+                {
+                    alphaValue -= fadeAwayPerSecond * Time.deltaTime;
+                    textComp.color = new Color(textComp.color.r, textComp.color.g, textComp.color.b, alphaValue);
+                    fadeTime -= Time.deltaTime;
+                }
             }
         }
-        /*if(Input.GetKeyDown(KeyCode.K))
-        {
-            index++;
-            lines[2] = "KOIRA VIHELTÄÄ";
-        } */
     }
-
-    void StartDialogue()
+    void PrintLine() //Muuta indeksiä kun haluaa
     {
-        index = 0;
         StartCoroutine(TypeLine());
     }
-
-    IEnumerator TypeLine()
+    IEnumerator TypeLine() //kirjota
     {
         //tarkasta mika aapinen
         foreach (char c in lines[index].ToCharArray())
@@ -67,9 +73,7 @@ public class Dialogue : MonoBehaviour
             yield return new WaitForSeconds(textSpeed);
         }
     }
-
-
-    void NextLine()
+    void NextLine() //avaa seuraava
     {
         if (index < lines.Length - 1)
         {
@@ -83,3 +87,17 @@ public class Dialogue : MonoBehaviour
         }
     }
 }
+
+/*
+ *         /*if(Input.GetKeyDown(KeyCode.K))
+        {
+            index++;
+            lines[2] = "KOIRA VIHELTÄÄ";
+        } */
+    
+
+    /*void StartDialogue()
+    {
+        index = 0;
+        //StartCoroutine(TypeLine());
+    }*/

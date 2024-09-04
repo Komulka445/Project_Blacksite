@@ -13,6 +13,7 @@ public class WakeUp : MonoBehaviour
     private float elapsedTime = 0f;
     private float startValue = 1.0f;
     private float endValue = 0.25f;
+    public float waitTime = 5.0f;
     private bool isAnimating = true;
     void Start()
     {
