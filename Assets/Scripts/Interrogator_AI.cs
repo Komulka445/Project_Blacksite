@@ -28,7 +28,6 @@ public class Interrogator_AI : MonoBehaviour
 
         targetAngle = new Vector3(transform.rotation.x, transform.rotation.y - 90, transform.rotation.z);
     }
-
     void Update()
     {
         //Updateta nykynen kulma ja asema
