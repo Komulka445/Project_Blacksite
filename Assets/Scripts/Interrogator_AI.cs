@@ -16,8 +16,10 @@ public class Interrogator_AI : MonoBehaviour
     public Vector3 currentAngle;
     public Vector3 currentPosition;
     public float rotateTime = 2.0f;
+    public float waitTime = 10.0f;
     bool first = true;
-    int phase = 0;
+    bool access = true;
+    int phase = -1;
 
     void Start()
     {
@@ -30,6 +32,16 @@ public class Interrogator_AI : MonoBehaviour
     }
     void Update()
     {
+        if (waitTime > 0)
+        {
+            waitTime -= Time.deltaTime;
+        }
+        else if (access == true)
+        {
+            phase = 0;
+            access = false;
+        }
+
         //Updateta nykynen kulma ja asema
         currentAngle = new Vector3(transform.rotation.x, transform.rotation.y, transform.rotation.z);
         currentPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);

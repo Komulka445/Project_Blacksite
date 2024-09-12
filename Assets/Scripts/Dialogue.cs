@@ -5,44 +5,54 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using TMPro;
-
+using System.Data;
+using UnityEngine.UIElements;
 public class Dialogue : MonoBehaviour
 {
     public TextMeshProUGUI textComp;
     public string[] lines;
     public float textSpeed;
-    private Vignette vignette;
-    public float waitTime = 5.0f;
+    private float waitTime = 10.0f;
     public float changeRowTime = 2.0f;
     private int index;
     private bool start = true;
-    private int maxIndex = 1;
+    //private int[] lineFork;
     //textfeidaus
     public float fadeTime;
     public float alphaValue;
     public float fadeAwayPerSecond;
     void Start()
     {
+        //lineFork = new int[1];
+        //lineFork[0] = 0;
         index = 0;
         textComp.text = string.Empty;
 
-        textComp = GetComponent<TextMeshProUGUI>();
+        //textComp = GetComponent<TextMeshProUGUI>();
         fadeAwayPerSecond = 1 / fadeTime;
         alphaValue = textComp.color.a;
     }
     void Update()
     {
-        waitTime -= Time.deltaTime;
-        if (waitTime <= 0.0f && start == true) //alkulinet
+         /*if (index == 4)
+        {
+            Array.Clear(lineFork, 0, lineFork.Length);
+        }*/
+        if (waitTime > 0)
+        {
+            waitTime -= Time.deltaTime;
+        }
+        else if (start == true && waitTime < 0.0f) //alkulinet
         {
             Debug.Log("active");
-            gameObject.SetActive(true);
             PrintLine();
             start = false;
         }
+
         if (Input.GetMouseButtonDown(0) && start == false) //skippaa lukeminen /nextline
         {
-            if (textComp.text == lines[index] && index <= maxIndex)
+            //Debug.Log("Linefork.Length: "+lineFork.Length+" Index: "+index);
+            if (textComp.text == lines[index]/* && index <= lineFork.Length && index >= lineFork[0]*/)
             {
                 NextLine();
             }
@@ -51,7 +61,7 @@ public class Dialogue : MonoBehaviour
                 Debug.Log("else lpi");
                 StopAllCoroutines();
                 textComp.text = lines[index];
-                if (fadeTime > 0)
+                if (fadeTime > 0) //odottaa implementointia
                 {
                     alphaValue -= fadeAwayPerSecond * Time.deltaTime;
                     textComp.color = new Color(textComp.color.r, textComp.color.g, textComp.color.b, alphaValue);
@@ -66,7 +76,7 @@ public class Dialogue : MonoBehaviour
     }
     IEnumerator TypeLine() //kirjota
     {
-        //tarkasta mika aapinen
+        // mika aapinen
         foreach (char c in lines[index].ToCharArray())
         {
             textComp.text += c;
@@ -75,7 +85,7 @@ public class Dialogue : MonoBehaviour
     }
     void NextLine() //avaa seuraava
     {
-        if (index < lines.Length - 1)
+        if (index < lines.Length - 1 && index <= 2)
         {
             index++;
             textComp.text = string.Empty;
@@ -83,7 +93,7 @@ public class Dialogue : MonoBehaviour
         }
         else
         {
-            gameObject.SetActive(false);
+            //gameObject.SetActive(false);
         }
     }
 }

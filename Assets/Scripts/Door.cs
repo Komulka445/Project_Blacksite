@@ -13,7 +13,7 @@ public class Door : MonoBehaviour
     private Vector3 currentPosition;
     private Vector3 returnPosition;
     private bool IsOperating = false;
-    public float closingTime = 2.0f;
+    public float closingTime = 1.0f;
     private bool primary = true;
     //private float timeToWait = ;
     // Start is called before the first frame update

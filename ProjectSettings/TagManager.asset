@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Interrogator
+  - SittingPlayer
   layers:
   - Default
   - TransparentFX

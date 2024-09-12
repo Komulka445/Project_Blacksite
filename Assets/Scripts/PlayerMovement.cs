@@ -31,8 +31,12 @@ public class PlayerMovement : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         canMove = false;
-        transform.rotation = Quaternion.Euler(0, 0, 270);
-        Rotate90Degrees();
+
+        if (tag == "Player")
+        {
+            transform.rotation = Quaternion.Euler(0, 0, 270);
+            Rotate90Degrees();
+        }
     }
 
     void Update()
