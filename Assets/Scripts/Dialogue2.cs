@@ -4,14 +4,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.UI;
 using TMPro;
 using System.Data;
 using UnityEngine.UIElements;
 using UnityEngine.Windows;
 using Input = UnityEngine.Input;
+using Slider = UnityEngine.UI.Slider;
 
 public class Dialogue2 : MonoBehaviour
 {
+    public Slider sanityMeter;
     public TextMeshProUGUI textComp;
     private string[] lines;
     public float textSpeed;
@@ -20,6 +23,7 @@ public class Dialogue2 : MonoBehaviour
     private int index;
     private bool start = true;
     private int readUntilOrReadSingle = 8;
+    private bool line3 = true;
     void Start()
     {
         textComp.text = string.Empty;
@@ -51,12 +55,13 @@ public class Dialogue2 : MonoBehaviour
     }
     void Update()
     {
+        if (index == 3 && line3 == true){sanityMeter.value = sanityMeter.value + 0.05f;line3 = false;};
         if(index == 9) //eka kysymyes , onki idei miksi täl
         {
             if (Input.GetKey(KeyCode.Alpha1))
             {
                 index = 10; //no13 14 15
-                readUntilOrReadSingle = 15;
+                
                 AdvanceDialogue();
             }
             else if (Input.GetKey(KeyCode.Alpha2))
