@@ -22,16 +22,14 @@ public class PlayerMovement : MonoBehaviour
     private float rotationX = 0;
     private CharacterController characterController;
     private bool canMove = true;
-
-    
-
+    public Light flashlight;
     void Start()
     {
         characterController = GetComponent<CharacterController>();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         canMove = false;
-
+        flashlight.gameObject.SetActive(false);
         if (tag == "Player")
         {
             transform.rotation = Quaternion.Euler(0, 0, 270);
@@ -49,6 +47,18 @@ public class PlayerMovement : MonoBehaviour
         float curSpeedY = canMove ? (isRunning ? runSpeed : walkSpeed) * Input.GetAxis("Horizontal") : 0;
         float movementDirectionY = moveDirection.y;
         moveDirection = (forward * curSpeedX) + (right * curSpeedY);
+
+        if(Input.GetKeyDown(KeyCode.F))
+        {
+            if(flashlight.gameObject.activeSelf == true)
+            {
+                flashlight.gameObject.SetActive(false);
+            }
+            else if (flashlight.gameObject.activeSelf == false)
+            {
+                flashlight.gameObject.SetActive(true);
+            }
+        }
 
         //hyppy
         if (Input.GetButton("Jump") && canMove && characterController.isGrounded)
