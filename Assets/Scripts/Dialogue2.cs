@@ -19,6 +19,8 @@ public class Dialogue2 : MonoBehaviour
     public float percentage;
     public Slider sanityMeter;
     public TextMeshProUGUI textComp;
+    public AudioSource stinger;
+    public GameObject dialoguePanel;
     private string[] lines;
     public float textSpeed;
     private float waitTime = 10.0f;
@@ -27,9 +29,11 @@ public class Dialogue2 : MonoBehaviour
     private bool start = true;
     private int readUntilOrReadSingle = 8;
     private bool line3 = true;
+    public bool transferReady = false;
     private int sanityInt;
     void Start()
     {
+        stinger = GetComponent<AudioSource>();
         textComp.text = string.Empty;
         lines = new string[40];
         lines[0] = "You: Hello?";//alku
@@ -52,14 +56,11 @@ public class Dialogue2 : MonoBehaviour
         lines[12] = "Who do you work for??";//kenelle ttyoskenetelee
 
         lines[13] = "Pierce: The reason is classified because I am not meant to remind you about it. Only thing you need to know that you wont be leaving for a while."; //miksi taalla vastuas respons
-        lines[16] = "1. For a while?\n2. Cant you just let me go?";//option 2
-        lines[17] = "What do you mean that I wont be leaving for while";
-        lines[18] = "Please just let me go, I havent done nothing!";
-
         lines[14] = "Pierce: As you probably have figured out, I do not enjoy the liberties of sharing any detailed information."; //mika paikka on vastaust respons
         lines[15] = "Pierce: The department that I work for protects our national interests is all you need to know."; //kenelle toihin vastaus respons
-        
 
+        lines[16] = "Pierce: But now shut the fuck up and lets get this over with. We will just dispose your body because you arent surviving this.";
+        lines[17] = "You: *Youve been injected with a (possibly) lethal substance";
     }
     void Update()
     {
@@ -89,53 +90,24 @@ public class Dialogue2 : MonoBehaviour
                 index = 15;
             }
         }
-        if(index == 13)
+        if(index == 13 || index == 14 || index == 15)
         {
-            if (Input.GetKey(KeyCode.Alpha1))
+            AdvanceDialogue();
+            index = 16;
+        }
+        if(index == 16) { AdvanceDialogue(); index = 17; };
+        if(index == 17 && Input.GetMouseButtonDown(0))
+        {
+            stinger.Play();
+            AdvanceDialogue();
+            if(Input.GetMouseButtonDown(0))
             {
-                index = 10; //no13 14 15
-
-                AdvanceDialogue();
-                index = 13;
-            }
-            else if (Input.GetKey(KeyCode.Alpha2))
-            {
-                index = 11; //yes 16 
-                AdvanceDialogue();
-                index = 14;
+                transferReady = true; // warppaus leveliin
             }
         }
-        if (index == 14)
+        if(index == 18)
         {
-            if (Input.GetKey(KeyCode.Alpha1))
-            {
-                index = 10; //no13 14 15
-
-                AdvanceDialogue();
-                index = 13;
-            }
-            else if (Input.GetKey(KeyCode.Alpha2))
-            {
-                index = 11; //yes 16 
-                AdvanceDialogue();
-                index = 14;
-            }
-        }
-        if (index == 15)
-        {
-            if (Input.GetKey(KeyCode.Alpha1))
-            {
-                index = 10; //no13 14 15
-
-                AdvanceDialogue();
-                index = 13;
-            }
-            else if (Input.GetKey(KeyCode.Alpha2))
-            {
-                index = 11; //yes 16 
-                AdvanceDialogue();
-                index = 14;
-            }
+            dialoguePanel.SetActive(false);
         }
 
         Debug.Log(index + " " + lines[index]);

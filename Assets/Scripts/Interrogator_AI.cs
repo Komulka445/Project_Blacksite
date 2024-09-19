@@ -17,7 +17,7 @@ public class Interrogator_AI : MonoBehaviour
     public Vector3 currentPosition;
     public float rotateTime = 2.0f;
     public float waitTime = 10.0f;
-    bool first = true;
+    //bool first = true;
     bool access = true;
     int phase = -1;
 

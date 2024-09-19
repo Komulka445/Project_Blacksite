@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
+using Unity.Burst.CompilerServices;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
@@ -21,10 +23,21 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 moveDirection = Vector3.zero;
     private float rotationX = 0;
     private CharacterController characterController;
+    public GameObject exitTrigger;
+    public GameObject dialogueGObject;
+    public GameObject eyeLids;
+    private Vector3 exitSpawn;
+    private Vector3 horrorSpawn;
     private bool canMove = true;
+    private bool runOnce = true;
+    private bool horrorStarted = false;
+    public bool horrorCompleted = false;
     public Light flashlight;
+    
     void Start()
     {
+        exitSpawn = new Vector3(5.0f, 3.875f, 10.375f);
+        horrorSpawn = new Vector3(0.28125f, 0.96875f, 145.6875f);
         characterController = GetComponent<CharacterController>();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -47,8 +60,27 @@ public class PlayerMovement : MonoBehaviour
         float curSpeedY = canMove ? (isRunning ? runSpeed : walkSpeed) * Input.GetAxis("Horizontal") : 0;
         float movementDirectionY = moveDirection.y;
         moveDirection = (forward * curSpeedX) + (right * curSpeedY);
+        if(GameObject.Find("DialogueSystem") != null) 
+        {
+            if (GameObject.Find("DialogueSystem").GetComponent<Dialogue2>().transferReady == true && horrorStarted == false)
+            {
+                canMove = false;
+                transform.position = horrorSpawn;
+                transform.rotation = Quaternion.Euler(0, 0, 270);
+                Rotate90Degrees();
+                horrorStarted = true;
+            }
+        }
+        if (GameObject.Find("ExitTrigger").GetComponent<ExitCollider>().colliding3 == true && runOnce == true)
+        {
+            //scripti pelaajan lapi
+            Debug.Log("scpritci pelaaja lapi"+ transform.position+" "+exitSpawn);
+            transform.position = exitSpawn;
+            horrorCompleted = true;
+            runOnce = false;
+        }
 
-        if(Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.F))
         {
             if(flashlight.gameObject.activeSelf == true)
             {
