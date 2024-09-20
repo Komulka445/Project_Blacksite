@@ -15,8 +15,10 @@ public class Interrogator_AI : MonoBehaviour
     public Vector3 targetAngle;
     public Vector3 currentAngle;
     public Vector3 currentPosition;
+    public GameObject playerRef;
     public float rotateTime = 2.0f;
     public float waitTime = 10.0f;
+    public bool seated = false;
     //bool first = true;
     bool access = true;
     int phase = -1;
@@ -42,8 +44,12 @@ public class Interrogator_AI : MonoBehaviour
             access = false;
         }
 
-        //Updateta nykynen kulma ja asema
-        currentAngle = new Vector3(transform.rotation.x, transform.rotation.y, transform.rotation.z);
+        if (GameObject.Find("Player").GetComponent<PlayerMovement>().horrorCompleted == true)
+        {
+            transform.rotation = Quaternion.Euler(0, 0, 270);
+        }
+            //Updateta nykynen kulma ja asema
+            currentAngle = new Vector3(transform.rotation.x, transform.rotation.y, transform.rotation.z);
         currentPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
         if (phase == 0)
         { //eka pätkä alusta oven eteen
@@ -68,6 +74,7 @@ public class Interrogator_AI : MonoBehaviour
             transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
             if (currentPosition == targetPosition)
             {
+                seated = true;
                 phase = 3;
             }
         }

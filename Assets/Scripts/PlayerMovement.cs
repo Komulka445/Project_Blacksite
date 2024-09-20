@@ -26,11 +26,12 @@ public class PlayerMovement : MonoBehaviour
     public GameObject exitTrigger;
     public GameObject dialogueGObject;
     public GameObject eyeLids;
+    public GameObject victory;
     private Vector3 exitSpawn;
     private Vector3 horrorSpawn;
     private bool canMove = true;
     private bool runOnce = true;
-    private bool horrorStarted = false;
+    public bool horrorStarted = false;
     public bool horrorCompleted = false;
     public Light flashlight;
     
@@ -60,7 +61,11 @@ public class PlayerMovement : MonoBehaviour
         float curSpeedY = canMove ? (isRunning ? runSpeed : walkSpeed) * Input.GetAxis("Horizontal") : 0;
         float movementDirectionY = moveDirection.y;
         moveDirection = (forward * curSpeedX) + (right * curSpeedY);
-        if(GameObject.Find("DialogueSystem") != null) 
+        if(GameObject.Find("WinTrigger").GetComponent<WinCollider>().colliding4 == true)
+        {
+            canMove = false;
+        }
+        if (GameObject.Find("DialogueSystem") != null) 
         {
             if (GameObject.Find("DialogueSystem").GetComponent<Dialogue2>().transferReady == true && horrorStarted == false)
             {

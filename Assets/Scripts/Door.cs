@@ -15,6 +15,7 @@ public class Door : MonoBehaviour
     private bool IsOperating = false;
     public float closingTime = 1.0f;
     private bool primary = true;
+    public GameObject playerRef;
     //private float timeToWait = ;
     // Start is called before the first frame update
     void Start()
@@ -32,6 +33,12 @@ public class Door : MonoBehaviour
             Debug.Log("PRIMARY FALSE");
         }*/
         currentPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+
+        if (GameObject.Find("Player").GetComponent<PlayerMovement>().horrorCompleted == true)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
+        }
+
         if (IsOperating == true)
         {
             //Debug.Log("Lapi");

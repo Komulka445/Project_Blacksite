@@ -10,10 +10,12 @@ using UnityEditor.UI;
 public class ButtonPressed : MonoBehaviour
 {
     public GameObject settings;
+    public GameObject ReadMePanel;
     // Start is called before the first frame update
     void Start()
     {
         settings.SetActive(false);
+        ReadMePanel.SetActive(false);
     }
     public void LoadScene()
     {
@@ -30,6 +32,19 @@ public class ButtonPressed : MonoBehaviour
             settings.SetActive(false );
         }
     }
+
+    public void ReadMe()
+    {
+        if (ReadMePanel.activeSelf == false)
+        {
+            ReadMePanel.SetActive(true);
+        }
+        else if (ReadMePanel.activeSelf == true)
+        {
+            ReadMePanel.SetActive(false);
+        }
+    }
+
     public void QuitGame()
     {
         SceneManager.LoadScene("SampleScene");

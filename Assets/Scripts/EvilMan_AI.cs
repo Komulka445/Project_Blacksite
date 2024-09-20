@@ -7,6 +7,7 @@ public class EvilMan_AI : MonoBehaviour
 {
     public Light roomLight;
     private Vector3 targetPosition;
+    private Vector3 friendPosition;
     private Vector3 spookPosition;
     private Vector3 currentPosition;
     private bool hunt = false;
@@ -14,6 +15,7 @@ public class EvilMan_AI : MonoBehaviour
     public bool startMusic = true;
     public GameObject spookTrigger;
     public GameObject exitTrigger;
+    public GameObject playerRef;
     private AudioSource commieAudioSource;
     [SerializeField]
     public AudioClip EvilManTaunt;
@@ -28,6 +30,7 @@ public class EvilMan_AI : MonoBehaviour
     {
         currentPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
         spookPosition = new Vector3(16.96875f, 3.125f, 217.375f);
+        friendPosition = new Vector3(5.09375f, 5.734375f, 21.65625f);
         commieAudioSource = GetComponent<AudioSource>();
         //EvilManTaunt = GetComponent<AudioSource>();
         //EvilManMusic = GetComponent<AudioSource>();
@@ -38,6 +41,11 @@ public class EvilMan_AI : MonoBehaviour
     {
         currentPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
         targetPosition = new Vector3(Target.transform.position.x, transform.position.y, Target.transform.position.z);//xz
+
+        if (GameObject.Find("Player").GetComponent<PlayerMovement>().horrorCompleted == true) //hyvyys
+        {
+            transform.position = friendPosition;
+        }
 
         if (GameObject.Find("ExitTrigger").GetComponent<ExitCollider>().colliding3 == true)
         {
