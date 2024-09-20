@@ -29,7 +29,7 @@ public class HorrorIQ : MonoBehaviour
             sanityElement.gameObject.SetActive(true);
             //sammuu
             sanityMeter.value = sanityMeter.value + 10;
-            Debug.Log("sammuu");
+            //Debug.Log("sammuu");
             roomLight.gameObject.SetActive(false);
             doNotRun = true;
         }

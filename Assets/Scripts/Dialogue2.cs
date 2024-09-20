@@ -156,14 +156,14 @@ public class Dialogue2 : MonoBehaviour
             dialoguePanel.SetActive(false);
         }*/
 
-        Debug.Log(index + " " + lines[index]);
+        //Debug.Log(index + " " + lines[index]);
         if (waitTime > 0) //alotus taimeri
         {
             waitTime -= Time.deltaTime;
         }
         else if (start == true && waitTime < 0.0f) //alkulinet
         {
-            Debug.Log("active");
+            //Debug.Log("active");
             PrintLine();
             start = false;
         }

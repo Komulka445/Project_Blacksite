@@ -79,7 +79,7 @@ public class PlayerMovement : MonoBehaviour
         if (GameObject.Find("ExitTrigger").GetComponent<ExitCollider>().colliding3 == true && runOnce == true)
         {
             //scripti pelaajan lapi
-            Debug.Log("scpritci pelaaja lapi"+ transform.position+" "+exitSpawn);
+            //Debug.Log("scpritci pelaaja lapi"+ transform.position+" "+exitSpawn);
             transform.position = exitSpawn;
             horrorCompleted = true;
             runOnce = false;

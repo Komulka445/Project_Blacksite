@@ -19,10 +19,10 @@ public class SpookCollider : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log("before lapi");
+        //Debug.Log("before lapi");
         if (other.gameObject.CompareTag("Player"))
         {
-            Debug.Log("lapi");
+            //Debug.Log("lapi");
             colliding2 = true;
         }
         //Debug.Log("Collidaa");

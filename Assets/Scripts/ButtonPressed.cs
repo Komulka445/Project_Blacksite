@@ -5,7 +5,6 @@ using UnityEngine.EventSystems;
 using TMPro;
 using UnityEngine.UI;
 using Unity.VisualScripting;
-using UnityEditor.UI;
 
 public class ButtonPressed : MonoBehaviour
 {
@@ -47,6 +46,6 @@ public class ButtonPressed : MonoBehaviour
 
     public void QuitGame()
     {
-        SceneManager.LoadScene("SampleScene");
+        Application.Quit();
     }
 }

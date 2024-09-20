@@ -13,10 +13,10 @@ public class WinCollider : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log("before lapi");
+        //Debug.Log("before lapi");
         if (other.gameObject.CompareTag("Player"))
         {
-            Debug.Log("lapi");
+            //Debug.Log("lapi");
             colliding4 = true;
         }
         //Debug.Log("Collidaa");

@@ -44,7 +44,7 @@ public class Dialogue : MonoBehaviour
         }
         else if (start == true && waitTime < 0.0f) //alkulinet
         {
-            Debug.Log("active");
+            //Debug.Log("active");
             PrintLine();
             start = false;
         }
@@ -58,7 +58,7 @@ public class Dialogue : MonoBehaviour
             }
             else
             {
-                Debug.Log("else lpi");
+                //Debug.Log("else lpi");
                 StopAllCoroutines();
                 textComp.text = lines[index];
                 if (fadeTime > 0) //odottaa implementointia
