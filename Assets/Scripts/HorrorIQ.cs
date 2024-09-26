@@ -12,7 +12,7 @@ public class HorrorIQ : MonoBehaviour
     public GameObject roomLightTrigger;
     private bool doNotRun = false;
     [SerializeField] private Volume volume;
-    private Vignette vignette;
+    //private Vignette vignette;
 
     // Start is called before the first frame update
     void Start()
@@ -26,9 +26,9 @@ public class HorrorIQ : MonoBehaviour
     {
         if(GameObject.Find("RoomLightTrigger").GetComponent<RetardCollider>().colliding == true && doNotRun == false)
         {
-            sanityElement.gameObject.SetActive(true);
+            //sanityElement.gameObject.SetActive(true);
             //sammuu
-            sanityMeter.value = sanityMeter.value + 10;
+            //sanityMeter.value = sanityMeter.value + 10;
             //Debug.Log("sammuu");
             roomLight.gameObject.SetActive(false);
             doNotRun = true;
